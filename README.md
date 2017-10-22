@@ -225,7 +225,7 @@ Now we have two full output belts. Just to prove that this works for all combina
 
 ![](4x4-simple-full-2-belt-x4.gif)
 
-The reason this works is fairly simple. Let's look at two other cases. Here is the same example as above where the simple 4x4 balancer has problems, but with all 4 outputs running:
+The reason this works is fairly simple. To understand why, let's look at two other cases of the simple 4x4 balancer. Here is the same example as above where the simple 4x4 balancer has problems, but with all 4 outputs running:
 
 ![](4x4-simple-half-2-in-4-out.gif)
 
