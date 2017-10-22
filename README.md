@@ -178,16 +178,57 @@ Now we know what the basic pattern is when building the next size of balancer. S
 
 ## Throughput of Balancers
 
-Earlier I mentioned that for the initial designs we were assuming that all belts were flowing freely. This is because these balancer designs do not work as you might expect if some outputs are blocked. Some sets of outputs and inputs will work fine, but others will only get partial throughput. Consider the 4x4 balancer we discussed above.
+Earlier I mentioned that for the initial designs we were assuming that all belts were flowing freely. This is because these balancer designs do not work as you might expect if some outputs are blocked and only some inputs are being fed. Some sets of outputs and inputs will work fine, but others will only get partial throughput.
 
-When all inputs and outputs are flowing there is no problem.
+### Partial Throughput
+
+Consider the 4x4 balancer we discussed above. When all inputs and outputs are flowing there is no problem.
+
 ![4x4 half](4x4-half.gif)
 
 But when only the right 2 input belts are flowing and only the leftmost and rightmost outputs belts are flowing, we only get half a belt of output on each of the two flowing output belts despite having two full belts for input.
 
-<>
+![4x4 half](4x4-half-2-belt.gif)
 
+This happens because the two outer output belts are only fed by a single full belt in this instance. The problem is easily fixed by adding two more balancers to the bottom.
 
+![4x4 half](4x4-full-2-belt.gif)
+
+What this means when dealing with larger balancers, though, is not obvious with this design. Let's look at an alternate 4-belt balancer which has the Splitters on either end instead of having two in the middle.
+
+![4x4 simple half](4x4-simple-half.gif)
+
+As you can see, this design also has full throughput with all four belt flowing freely. It works by just swapping the two center belts before the final two Splitters.
+
+This design still has the same issue with throughput, but with a different combination of inputs and outputs.
+
+![](4x4-simple-half-2-belt.gif)
+
+The problem is easier to see now, though, since just the one belt on the right is feeding the two flowing output belts through the second right-hand Splitter. For this design, adding two Splitters at the end would do nothing since there are already two Splitters at the end.
+
+### Full Throughput
+
+It turns out the solution is to put two os these 4x4 balancers in series, feeding the output of the first into the input of the second.
+
+![](4x4-simple-full-2-belt.gif)
+
+Now we have two full output belts. Just to prove that this works for all combinations of outputs, here's all 4 of those:
+
+![](4x4-simple-full-2-belt-x4.gif)
+
+The reason this works is fairly simple. Let's look at two other cases. Here is the same example as above where the simple 4x4 balancer has problems, but with all 4 outputs running:
+
+![](4x4-simple-half-2-in-4-out.gif)
+
+The 2 right belts, which were only half full when we had both of the right inputs running are still only half full, but now we have four belts with half output, meaning we're using all two full belts of our input.
+
+Here's the same again, but with all 4 inputs fed instead:
+
+![](4x4-simple-half-4-in-2-out.gif)
+
+This time the two right output belts are full whereas previously they were only half full. We're only using half of the four belts of input, of course, but at least both of the output belts are full now.
+
+This gives us a few more characteristics of this balancer to reason about. If all four inputs are full or all four outputs are flowing we have no throughput issues. This is why putting two balancer in series fixes our throughput problems. By definition, if an input is being fed the balancer will take some from each input and send it to each output. Any input that is fed will be flowing. When we put two of these balancer in series, then, all four outputs of the first balancer will be flowing and all four inputs of the second balancer will be fed, so we never need to worry about their throughput.
 
 
 ```
