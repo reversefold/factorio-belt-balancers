@@ -8,27 +8,36 @@ Recently while playing Factorio I ended up building a fairly large mega-base whi
 Anyone who has played Factorio for any length of time is familiar with the simplest form of multi-belt balancer, the Splitter.
 
 The splitter is most often used for what its name says, splitting one belt of input into two belts of equal output, effectively splitting the input into two halves.
+
 ```
 input    ||
 Splitter -----
 output   || ||
 ```
 
+![](Splitter-1-in-2-out.gif)
+
 However, the Splitter is actually more versatile than its name would suggest. A Splitter can also do the reverse, combining.
+
 ```
 input    || ||
 Splitter -----
 output   ||
 ```
 
+![](Splitter-2-in-1-out.gif)
+
 Since a Splitter has two inputs as well as two outputs, you can feed two belts of input into it and get one belt of output, reversing the normal usage.
 
 Taking this to its logical conclusion, if you feed belts into both of the inputs and connect belts to both of the outputs, you are first combining the inputs then splitting to the outputs, leaving you with two balanced belts.
+
 ```
 input    || ||
 Splitter -----
 output   || ||
 ```
+
+![](Splitter.gif)
 
 So a better name for the Splitter might be a Two-Belt Balancer.
 
@@ -124,6 +133,8 @@ Undergrounds   / v  v \
               /  |  |  \
 outputs       E  E  E  E
 ```
+
+![](4x4-half-standard.gif)
 
 This should look familiar if you've ever used what has become the standard four-belt balancer in the Factorio community. Some blueprints add two more Splitters on the bottom but this isn't needed just to average the inputs to the outputs. (More on this later.)
 
@@ -230,26 +241,18 @@ This time the two right output belts are full whereas previously they were only 
 
 This gives us a few more characteristics of this balancer to reason about. If all four inputs are full or all four outputs are flowing we have no throughput issues. This is why putting two balancer in series fixes our throughput problems. By definition, if an input is being fed the balancer will take some from each input and send it to each output. Any input that is fed will be flowing. When we put two of these balancer in series, then, all four outputs of the first balancer will be flowing and all four inputs of the second balancer will be fed, so we never need to worry about their throughput.
 
+# Bonus Balancers
 
-```
-inputs        A  B  C  D  E  F  G  H
-Splitters     ----  ----  ----  ----
-Splitter      |  ----  |  |  ----  |
-              \  I  I  /  \  J  J  /
-Undergrounds   \ v  v /    \ v  v /
-                \    /      \    /
-Splitter         ----        ----
-                /    \      /    \
-Undergrounds   / v  v \    / v  v \
-              /  |  |  \  /  |  |  \
-              I  I  I  I  J  J  J  J
-Splitter            |  ----  |
-                    \  K  K  /
-Undergrounds         \ v  v /
-                      \    /
-Splitter               ----
-                      /    \
-Undergrounds         / v  v \
-                    /  |  |  \
-outputs             K  K  K  K
-```
+Here are a few of the larger balancers I've built on the ideas laid out above. These are all built with express (blue) belts as the longer underground belt length makes them a lot simpler.
+
+An 8x8 balancer:
+
+![](8x8.gif)
+
+A 16x16 balancer:
+
+![](16x16.gif)
+
+A 32x32 balancer:
+
+![](32x32.gif)
