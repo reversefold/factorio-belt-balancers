@@ -199,7 +199,7 @@ But when only the right 2 input belts are flowing and only the leftmost and righ
 
 ![4x4 half](4x4-half-2-belt.gif)
 
-This happens because the two outer output belts are only fed by a single full belt in this instance. The problem is easily fixed by adding two more balancers to the bottom.
+This happens because the two outer output belts are only fed by a single full belt in this instance. The problem is easily fixed by adding two more Splitters to the bottom.
 
 ![4x4 half](4x4-full-2-belt.gif)
 
