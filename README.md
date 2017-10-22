@@ -237,7 +237,7 @@ Here's the same again, but with all 4 inputs fed instead:
 
 This time the two right output belts are full whereas previously they were only half full. We're only using half of the four belts of input, of course, but at least both of the output belts are full now.
 
-This gives us a few more properties of this balancer to reason about. If all four inputs are full or all four outputs are flowing we have no throughput issues. This is why putting two balancers in series fixes our throughput problems. By definition, if an input is being fed the balancer will take some from that input and send it to each output. Any input that is fed will be flowing. When we put two of these balancers in series, then, all four outputs of the first balancer will be flowing and all four inputs of the second balancer will be fed, so we never need to worry about their throughput.
+If all four inputs are fed or all four outputs are flowing we have no throughput issues. This is why putting two balancers in series fixes our throughput problems. By definition, if an input is being fed the balancer will take some from that input and send it to each output. Any input that is fed will be flowing. When we put two of these balancers in series, then, all four outputs of the first balancer will be flowing and all four inputs of the second balancer will be fed, so we never need to worry about their throughput.
 
 # Bonus Balancers
 
