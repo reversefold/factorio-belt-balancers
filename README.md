@@ -182,7 +182,7 @@ Now we have two belts with the final balanced output, `K`. To get the rest balan
 
 ## Generalizing the pattern
 
-Now we know what the basic pattern is when building the next size of balancer. Start with two of the previous size of balancers and the outputs of those two balancers are now balanced for each half of the belts. Now you just have to take one belt from the left and one from the right and run them through a Splitter to get two of the final balanced belts. Keep doing this with the rest of the belts and you have the next size of balancer. I've found that up to an 8x8 balancer there is some manual routing that needs to be done to get the belts into the right places as the size is more limited, but from 16x16 and up you can reuse the basic blueprint in multiple stages to get the output belts of the two smaller balancers interleaved to send them through a set of Splitters to get the final balanced output.
+Now we know what the basic pattern is when building the next size of balancer. Start with two of the previous size of balancers and the outputs of those two balancers are now balanced for each half of the belts. Now you just have to take one belt from the left and one from the right and run them through a Splitter to get two of the final balanced belts. Keep doing this with the rest of the belts and you have the next size of balancer.
 
 
 ## Throughput of Balancers
@@ -242,6 +242,8 @@ This gives us a few more characteristics of this balancer to reason about. If al
 # Bonus Balancers
 
 Here are a few of the larger balancers I've built on the ideas laid out above. These are all built with express (blue) belts as the longer underground belt length makes them a lot simpler.
+
+I've found that up to an 8x8 balancer there is some manual routing that needs to be done to get the belts into the right places as the size is more limited, but from 16x16 and up you can reuse the basic blueprint in multiple stages to get the output belts of the two smaller balancers interleaved to send them through a set of Splitters to get the final balanced output.
 
 An 8x8 balancer:
 
