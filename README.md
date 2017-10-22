@@ -1,13 +1,13 @@
 # The mechanics of multi-belt balancers
 
-Recently while playing Factorio I ended up building a fairly large mega-base which had a need for large scale multi-belt balancers and I decided to go down the rabbit hole of building my own. There are a lot of blueprints for various multi-belt balancers and many discussions about the properties of multi-belt balancers but I never found a complete explanation of how they worked. This is my attempt to bring all of these things together and demystify the workings of the most ocmmon types of multi-belt balancers.
+Recently while playing Factorio I ended up building a fairly large mega-base which had a need for large scale multi-belt balancers and I decided to go down the rabbit hole of building my own. There are a lot of blueprints for various multi-belt balancers and many discussions about the properties of multi-belt balancers but I never found a complete explanation of how they worked. This is my attempt to bring all of these things together and demystify the workings of the most common types of multi-belt balancers.
 
 
 ## What is a balancer?
 
 Anyone who has played Factorio for any length of time is familiar with the simplest form of multi-belt balancer, the Splitter.
 
-The splitter is most often used for what its name says, splitting one belt of input into two belts of equal output, effectively splitting the input into two halves.
+The Splitter is most often used for what its name says, splitting one belt of input into two belts of equal output, effectively splitting the input into two halves.
 
 ```
 input    ||
@@ -45,12 +45,12 @@ This is the simplest form of a multi-belt balancer, the one which Factorio has g
 
 Multi-belt balancers at their simplest form take the same number of inputs as they have outputs and don't worry about backups or blocked outputs. We'll touch more on this later, but for now let's just assume that all belts are flowing freely.
 
-(Note that when this post is treating belts as a single unit even though every belt has two lanes within it which are distinct and separate. The Splitter, on its own, will never mix the contents of the left lane of a belt with the right lane of a belt. Any item on the left lane will always stay in the left lane, no metter how many splitters it goes through. The logic that a Splitter uses to decide which output something will go to is fairly complex, though, and gets even more so when you have more than one type of item on a belt. For purposes of simplicity, let's just assume that we have only one item on our belts and take it as given that the Splitter will always give you an equal number of items on each of its 2 output belts.)
+(Note that this post treats belts as a single unit even though every belt has two lanes within it which are distinct and separate. The Splitter, on its own, will never mix the contents of the left lane of a belt with the right lane of a belt. Any item on the left lane will always stay in the left lane, no metter how many splitters it goes through. The logic that a Splitter uses to decide which output something will go to is fairly complex, though, and gets even more so when you have more than one type of item on a belt. For purposes of simplicity, let's just assume that we have only one item on our belts and take it as given that the Splitter will always give you an equal number of items on each of its 2 output belts.)
 
 
 ### Formal definition
 
-Now that we understand the hubmle Splitter we have enough to give a simple defintion for a multi-belt balancer.
+Now that we understand the humble Splitter, we have enough to give a simple defintion for a multi-belt balancer.
 
 A multi-belt balancer will take any number of inputs and divide the items from the inputs equally among any number of outputs.
 
@@ -67,14 +67,12 @@ Splitter ----
 outputs  C  C
 ```
 
-A is the left input lane and B is the right input lane. Both of the output lanes have the same amount on them, so they're both C. The equasion for what is on each output belt is then:
-`C = (A + B) / 2`
-which is just an average of two numbers.
+`A` is the left input belt and `B` is the right input belt. Both of the output belts have the same amount on them, so they're both `C`. The equation for what is on each output belt is then `C = (A + B) / 2` which is just an average of two numbers.
 
 
 ### The four-belt balancer
 
-Let's look at a four-belt balancer
+Let's look at a four-belt balancer.
 
 ```
 inputs   A  B  C  D
@@ -92,7 +90,7 @@ Splitters ----  ----
 outputs   F  F  G  G
 ```
 
-So `F = (A + B) / 2` and `G = (C + D) / 2`. Calculating the final result, `E`, as an average of two numbers is easy: `E = (F + G) / 2`. This leads to a simple idea, then, all we need to do is get one of the F outputs and one of the G outputs into a two-belt splitter and we'll have two belts with E as their output.
+So `F = (A + B) / 2` and `G = (C + D) / 2`. Calculating the final result, `E`, as an average of two numbers is now easy: `E = (F + G) / 2`. This leads to a simple idea, then. All we need to do is get one of the `F` outputs and one of the `G` outputs into a Splitter and we'll have two belts with E as their output.
 
 ```
 inputs    A  B  C  D
@@ -102,7 +100,7 @@ Splitter     ----
 outputs      E  E
 ```
 
-That works for half of our 4 output belts, now we need to get the other 2 into a Splitter.
+That works for half of our 4 output belts. Now we need to get the other 2 into a Splitter.
 
 ```
 inputs    A  B  C  D
@@ -113,8 +111,8 @@ outputs   |  E  E  |
           \        /
            \      /
             \    /
-             ----
-             E  E
+Splitter     ----
+outputs      E  E
 ```
 
 That's it, we've now broken down a four-belt balancer into four discrete two-belt balancers. All that's left now is to route those output belts so that we can use them all.
@@ -136,7 +134,7 @@ outputs       E  E  E  E
 
 ![](4x4-half-standard.gif)
 
-This should look familiar if you've ever used what has become the standard four-belt balancer in the Factorio community. Some blueprints add two more Splitters on the bottom but this isn't needed just to average the inputs to the outputs. (More on this later.)
+This should look familiar if you've ever used what has become the standard four-belt balancer in the Factorio community. Some blueprints add two more Splitters on the bottom but this isn't needed just to average the inputs to the outputs when all inputs are fed and all outputs are flowing freely. (More on this later.)
 
 This first step from Splitter to four-belt balancer may seem simple but it can be used as a blueprint for all larger belt balancers (as long as the number of inputs is equal to the number of outputs and the number of inputs is a power of two, or twice the size of the next smallest balancer).
 
@@ -159,9 +157,9 @@ Undergrounds   / v  v \    / v  v \
               I  I  I  I  J  J  J  J
 ```
 
-Now, you could stick another 4x4 belt balancer on the bottom in the middle and it would balance two I and two J belts to get you the eventual balanced output, K, but it's not really needed. The first two Splitters on a 4x4 balancer wouldn't actually be doing anything since putting two I belts into a Splitter would just give you two I outputs again.
+Now, you could stick another 4x4 belt balancer on the bottom in the middle and it would balance two `I` and two `J` belts to get you the eventual balanced output, `K`, but it's not really needed. The first two Splitters on a 4x4 balancer wouldn't actually be doing anything since putting two `I` belts into a Splitter would just give you two `I` outputs again.
 
-All we really need to do is take one I and one J belt and put them through a Splitter
+All we really need to do is take one `I` and one `J` belt and put them through a Splitter.
 
 ```
 inputs        A  B  C  D  E  F  G  H
@@ -179,10 +177,10 @@ Splitter               ----
                        K  K
 ```
 
-Now we have two belts with the final balanced output, K. To get the rest balanced all we have to do is take each remaining pair of I and J belts and send them through a Splitter.
+Now we have two belts with the final balanced output, `K`. To get the rest balanced all we have to do is take each remaining pair of `I` and `J` belts and send them through a Splitter.
 
 
-## Generizing the pattern
+## Generalizing the pattern
 
 Now we know what the basic pattern is when building the next size of balancer. Start with two of the previous size of balancers and the outputs of those two balancers are now balanced for each half of the belts. Now you just have to take one belt from the left and one from the right and run them through a Splitter to get two of the final balanced belts. Keep doing this with the rest of the belts and you have the next size of balancer. I've found that up to an 8x8 balancer there is some manual routing that needs to be done to get the belts into the right places as the size is more limited, but from 16x16 and up you can reuse the basic blueprint in multiple stages to get the output belts of the two smaller balancers interleaved to send them through a set of Splitters to get the final balanced output.
 
@@ -209,17 +207,17 @@ What this means when dealing with larger balancers, though, is not obvious with 
 
 ![4x4 simple half](4x4-simple-half.gif)
 
-As you can see, this design also has full throughput with all four belt flowing freely. It works by just swapping the two center belts before the final two Splitters.
+As you can see, this design also has full throughput with all four belts flowing freely. It works by swapping the two center belts before the final two Splitters.
 
 This design still has the same issue with throughput, but with a different combination of inputs and outputs.
 
 ![](4x4-simple-half-2-belt.gif)
 
-The problem is easier to see now, though, since just the one belt on the right is feeding the two flowing output belts through the second right-hand Splitter. For this design, adding two Splitters at the end would do nothing since there are already two Splitters at the end.
+The problem is easier to see now, though, since just the one belt on the right is feeding the two flowing output belts through the bottom-right-hand Splitter. For this design, adding two Splitters at the end would do nothing since there are already two Splitters at the end.
 
 ### Full Throughput
 
-It turns out the solution is to put two os these 4x4 balancers in series, feeding the output of the first into the input of the second.
+It turns out the solution is to put two of these 4x4 balancers in series, feeding the output of the first into the input of the second.
 
 ![](4x4-simple-full-2-belt.gif)
 
@@ -239,7 +237,7 @@ Here's the same again, but with all 4 inputs fed instead:
 
 This time the two right output belts are full whereas previously they were only half full. We're only using half of the four belts of input, of course, but at least both of the output belts are full now.
 
-This gives us a few more characteristics of this balancer to reason about. If all four inputs are full or all four outputs are flowing we have no throughput issues. This is why putting two balancer in series fixes our throughput problems. By definition, if an input is being fed the balancer will take some from each input and send it to each output. Any input that is fed will be flowing. When we put two of these balancer in series, then, all four outputs of the first balancer will be flowing and all four inputs of the second balancer will be fed, so we never need to worry about their throughput.
+This gives us a few more characteristics of this balancer to reason about. If all four inputs are full or all four outputs are flowing we have no throughput issues. This is why putting two balancers in series fixes our throughput problems. By definition, if an input is being fed the balancer will take some from each input and send it to each output. Any input that is fed will be flowing. When we put two of these balancer in series, then, all four outputs of the first balancer will be flowing and all four inputs of the second balancer will be fed, so we never need to worry about their throughput.
 
 # Bonus Balancers
 
