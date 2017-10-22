@@ -181,7 +181,7 @@ Now we know what the basic pattern is when building the next size of balancer. S
 Earlier I mentioned that for the initial designs we were assuming that all belts were flowing freely. This is because these balancer designs do not work as you might expect if some outputs are blocked. Some sets of outputs and inputs will work fine, but others will only get partial throughput. Consider the 4x4 balancer we discussed above.
 
 When all inputs and outputs are flowing there is no problem.
-![4x4 half](4x4 half.gif)
+![4x4 half](4x4-half.gif)
 
 But when only the right 2 input belts are flowing and only the leftmost and rightmost outputs belts are flowing, we only get half a belt of output on each of the two flowing output belts despite having two full belts for input.
 
